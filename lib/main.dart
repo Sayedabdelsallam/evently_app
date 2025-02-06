@@ -1,10 +1,13 @@
-import 'package:evently_app/layout/home_layout.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
+import 'firebase_options.dart';
 import 'modules/splash_screen/splash_screen.dart';
 import 'core/helper_functions/on_generate_route.dart';
 
-void main() {
+void main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 
