@@ -52,10 +52,16 @@ class _HomeLayoutState extends State<HomeLayout> {
           ],
         ),
         bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(1.0),
-          child: Container(
-            color: MyColors.primary,
-            height: 1.0,
+          preferredSize: Size.fromHeight(kToolbarHeight), // Set the preferred height
+          child: DefaultTabController(
+            length: 5,
+            child: TabBar(
+              tabs: [
+                Tab(
+                  icon: Icon(Icons.home),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -68,17 +74,17 @@ class _HomeLayoutState extends State<HomeLayout> {
         onPressed: () {  },
         elevation: 0.0,
         backgroundColor: MyColors.primary,
-        child: const Icon(
-          Icons.add,
-          color: MyColors.white,
-          size: 33.0,
-        ),
         shape: const StadiumBorder(
           side: BorderSide(
             color: Color(0xFFffffff),
             width: 5.0,
           ),
       ),
+        child: const Icon(
+          Icons.add,
+          color: MyColors.white,
+          size: 33.0,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
