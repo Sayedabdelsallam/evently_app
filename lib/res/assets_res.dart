@@ -10,11 +10,13 @@ class AssetsRes {
   static const String PLUGIN_VERSION = '1.0.0+1';
   static const String ARROW_BACK_ICON = 'assets/icons/arrow_back_icon.png';
   static const String ARROW_FRONT_ICON = 'assets/icons/arrow_front_icon.png';
+  static const String CRYING = 'assets/icons/crying.json';
   static const String EYESLASHIICON = 'assets/icons/eyeSlashIIcon.png';
   static const String GOOGLEICON = 'assets/icons/googleIcon.png';
   static const String MAILICON = 'assets/icons/mailIcon.png';
   static const String PASSICON = 'assets/icons/passIcon.png';
   static const String PERSONICON = 'assets/icons/personIcon.png';
+  static const String SMILE = 'assets/icons/smile.json';
   static const String LOGO = 'assets/images/Logo.png';
   static const String EVENTLYLOGO = 'assets/images/eventlyLogo.png';
   static const String FORGET_PASS = 'assets/images/forget_pass.png';
