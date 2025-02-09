@@ -5,6 +5,9 @@ import 'modules/splash_screen/splash_screen.dart';
 import 'core/helper_functions/on_generate_route.dart';
 
 void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
