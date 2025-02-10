@@ -1,10 +1,10 @@
 
-import 'package:evently_app/modules/on_boarding_screen/on_boarding_screen.dart';
+import 'package:evently_app/core/routs/pages_route_name.dart';
+import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
    const SplashScreen({super.key});
-   static const String routeName = 'splash';
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -16,7 +16,9 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
-      Navigator.pushReplacementNamed(context, OnBoardingScreen.routeName);
+      navigatorKey.currentState!
+          .pushNamed(PagesRouteName.onBoarding);
+
     });
   }
 

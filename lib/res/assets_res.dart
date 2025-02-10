@@ -15,11 +15,21 @@ class AssetsRes {
   static const String MAILICON = 'assets/icons/mailIcon.png';
   static const String PASSICON = 'assets/icons/passIcon.png';
   static const String PERSONICON = 'assets/icons/personIcon.png';
+  static const String THEMEMODE = 'assets/icons/themeMode.svg';
+  static const String EATING = 'assets/images/Eating.png';
   static const String LOGO = 'assets/images/Logo.png';
+  static const String BIRTHDAYCARD = 'assets/images/birthDayCard.png';
+  static const String BOOKCLUBCARD = 'assets/images/bookClubCard.png';
   static const String EVENTLYLOGO = 'assets/images/eventlyLogo.png';
+  static const String EXHBITIONCARD = 'assets/images/exhbitionCard.png';
   static const String FORGET_PASS = 'assets/images/forget_pass.png';
+  static const String GAMINGCARD = 'assets/images/gamingCard.png';
+  static const String HOLIDAYCARD = 'assets/images/holidayCard.png';
+  static const String MEETINGCARD = 'assets/images/meetingCard.png';
   static const String ONBOARDING1 = 'assets/images/onBoarding1.png';
   static const String ONBOARDING2 = 'assets/images/onBoarding2.png';
   static const String ONBOARDING3 = 'assets/images/onBoarding3.png';
   static const String ONBOARDNG4 = 'assets/images/onBoardng4.png';
+  static const String SPORTSCARD = 'assets/images/sportsCard.png';
+  static const String WORKSHOPCARD = 'assets/images/workShopCard.png';
 }

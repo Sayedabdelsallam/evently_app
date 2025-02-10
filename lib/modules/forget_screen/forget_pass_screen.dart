@@ -1,12 +1,12 @@
+import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
-import 'package:evently_app/modules/login_screen/login_screen.dart';
+import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/utils/colors.dart';
 
 class ForgetPassScreen extends StatelessWidget {
   const ForgetPassScreen({super.key});
-  static const String routeName = 'forget';
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,9 @@ class ForgetPassScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           onPressed: () {
-            Navigator.pushNamed(context, LoginScreen.routeName);
+            navigatorKey.currentState!
+                .pushNamed(PagesRouteName.signIn);
+
           },
           icon: Icon(
             Icons.arrow_back,
@@ -46,8 +48,8 @@ class ForgetPassScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: CustomButton(
-              onPressed: () {},
-              text: 'Reset Password',
+              onTab: () {},
+              title: 'Reset Password',
             ),
           ),
         ],

@@ -1,32 +1,40 @@
-import 'package:evently_app/res/font_res.dart';
+
 import 'package:flutter/material.dart';
 
 import '../utils/colors.dart';
 
 class CustomButton extends StatelessWidget {
-  const CustomButton({super.key, required this.onPressed, required this.text});
-   final VoidCallback onPressed;
-  final String text;
+  final String title;
+  final Function()? onTab;
+  final Color bgColor;
+  final double borderRadius;
+  final Color titleColor;
+
+  const CustomButton({
+    super.key,
+    required this.title,
+    this.onTab,
+    this.bgColor = MyColors.primary,
+    this.titleColor = MyColors.white,
+    this.borderRadius = 16,
+  });
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        backgroundColor: MyColors.primary,
+        backgroundColor: bgColor,
+        padding: const EdgeInsets.all(8),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16.0),
+          borderRadius: BorderRadius.circular(borderRadius),
         ),
-        minimumSize: Size(size.width * 0.8, size.height * 0.06),
       ),
-      onPressed: onPressed,
+      onPressed: onTab,
       child: Text(
-        text,
+        title,
         style: TextStyle(
-          color: MyColors.white,
-          fontSize: size.height * 0.03,
-          fontWeight: FontWeight.w500,
-          fontFamily: FontRes.INTER_18PT_REGULAR,
+          color: titleColor,
+          fontSize: 16,
         ),
       ),
     );

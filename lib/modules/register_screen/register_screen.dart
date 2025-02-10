@@ -1,13 +1,14 @@
+import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
-import 'package:evently_app/modules/login_screen/login_screen.dart';
+import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
-  static const String routeName = 'register';
+
 
   @override
   Widget build(BuildContext context) {
@@ -150,8 +151,8 @@ class RegisterScreen extends StatelessWidget {
                   height: size.height * 0.025,
                 ),
                 CustomButton(
-                    onPressed: (){},
-                    text: 'Create Account',
+                    onTab: (){},
+                    title: 'Create Account',
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -170,7 +171,9 @@ class RegisterScreen extends StatelessWidget {
                       TextButton(
                         onPressed: ()
                         {
-                          Navigator.pushNamed(context, LoginScreen.routeName);
+                          navigatorKey.currentState!
+                              .pushNamed(PagesRouteName.signIn);
+
                         },
                         child: Text(
                           'Login',
