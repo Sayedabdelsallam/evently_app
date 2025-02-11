@@ -10,6 +10,7 @@ class CustomTextForm extends StatelessWidget {
       required this.obscureText,
       this.suffixIcon,
       this.validator,
+      this.onValidate,
       this.prefixIcon,
       required this.keyboardType});
   final TextEditingController controller;
@@ -19,6 +20,7 @@ class CustomTextForm extends StatelessWidget {
   final Widget? prefixIcon;
   final String? Function(String?)? validator;
   final TextInputType keyboardType;
+  final Function? onValidate;
 
   @override
   Widget build(BuildContext context) {

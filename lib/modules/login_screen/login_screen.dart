@@ -1,10 +1,15 @@
+
 import 'package:evently_app/core/routs/pages_route_name.dart';
+=======
+import 'package:evently_app/core/utils/firebase_function.dart';
+
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -142,6 +147,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// **Login Logic**
   void _login() {
+
     if (_formKey.currentState!.validate()) {
       navigatorKey.currentState!
           .pushNamed(PagesRouteName.layout);
@@ -152,7 +158,23 @@ class _LoginScreenState extends State<LoginScreen> {
           content: Text('Please enter valid credentials'),
         ),
       );
+
+    if (!_formKey.currentState!.validate()) {
+      return;
+
     }
+    FirebaseFunction.loginAccount(
+      _emailController.text,
+      _passwordController.text,
+    ).then((value)
+    {
+      EasyLoading.dismiss();
+      if (value == true)
+      {
+        Navigator.pushNamed(context, HomeLayout.routeName);
+      }
+    });
+
   }
 
   /// **Text Style for Links**
