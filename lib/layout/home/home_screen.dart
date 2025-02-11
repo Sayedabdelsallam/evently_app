@@ -3,7 +3,7 @@ import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/layout/home/widgets/categoryCard.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:svg_flutter/svg.dart';
 
 import 'widgets/custom_tap_bar_item.dart';
 

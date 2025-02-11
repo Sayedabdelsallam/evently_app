@@ -1,8 +1,5 @@
-
 import 'package:evently_app/core/routs/pages_route_name.dart';
-=======
 import 'package:evently_app/core/utils/firebase_function.dart';
-
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/core/utils/colors.dart';
@@ -54,7 +51,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       return 'Please enter your email';
                     }
                     return null;
-                  }, obscureText: false,
+                  },
+                  obscureText: false,
                 ),
                 SizedBox(height: size.height * 0.02),
 
@@ -131,8 +129,8 @@ class _LoginScreenState extends State<LoginScreen> {
         icon: ImageIcon(
           AssetImage(
             _isPasswordVisible
-                ? 'assets/icons/eyeSlashIIcon.png'
-                : 'assets/icons/eyeSlashIIcon.png',
+                ? 'assets/icons/eyeIcon.png' // Corrected for visible password icon
+                : 'assets/icons/eyeSlashIIcon.png', // Corrected for hidden password icon
           ),
           color: MyColors.gray,
         ),
@@ -147,34 +145,26 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// **Login Logic**
   void _login() {
-
     if (_formKey.currentState!.validate()) {
-      navigatorKey.currentState!
-          .pushNamed(PagesRouteName.layout);
-
+      // Perform Firebase login
+      FirebaseFunction.loginAccount(
+        _emailController.text,
+        _passwordController.text,
+      ).then((value) {
+        EasyLoading.dismiss();
+        if (value == true) {
+          Navigator.pushNamed(context, PagesRouteName.layout);
+        } else {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Login failed, try again!')),
+          );
+        }
+      });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter valid credentials'),
-        ),
+        const SnackBar(content: Text('Please enter valid credentials')),
       );
-
-    if (!_formKey.currentState!.validate()) {
-      return;
-
     }
-    FirebaseFunction.loginAccount(
-      _emailController.text,
-      _passwordController.text,
-    ).then((value)
-    {
-      EasyLoading.dismiss();
-      if (value == true)
-      {
-        Navigator.pushNamed(context, HomeLayout.routeName);
-      }
-    });
-
   }
 
   /// **Text Style for Links**
@@ -209,7 +199,6 @@ class _LoginScreenState extends State<LoginScreen> {
             onPressed: () {
               navigatorKey.currentState!
                   .pushNamed(PagesRouteName.signUp);
-
             },
             child: Text(
               'Create Account',

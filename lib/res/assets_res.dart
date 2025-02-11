@@ -16,12 +16,9 @@ class AssetsRes {
   static const String MAILICON = 'assets/icons/mailIcon.png';
   static const String PASSICON = 'assets/icons/passIcon.png';
   static const String PERSONICON = 'assets/icons/personIcon.png';
-
+  static const String SMILE = 'assets/icons/smile.json';
   static const String THEMEMODE = 'assets/icons/themeMode.svg';
   static const String EATING = 'assets/images/Eating.png';
-=======
-  static const String SMILE = 'assets/icons/smile.json';
-
   static const String LOGO = 'assets/images/Logo.png';
   static const String BIRTHDAYCARD = 'assets/images/birthDayCard.png';
   static const String BOOKCLUBCARD = 'assets/images/bookClubCard.png';

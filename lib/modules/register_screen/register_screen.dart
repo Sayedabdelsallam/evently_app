@@ -1,21 +1,14 @@
-
-import 'package:evently_app/core/routs/pages_route_name.dart';
-=======
 import 'package:evently_app/core/extensions/validations.dart';
 import 'package:evently_app/core/utils/firebase_function.dart';
-
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
-import 'package:evently_app/main.dart';
-import 'package:evently_app/res/font_res.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
-
+  static const String routeName = 'register';
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -28,13 +21,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final passwordController = TextEditingController();
   final rePasswordController = TextEditingController();
   bool _isPasswordVisible = false;
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pop(context);
+          },
           icon: Icon(
             Icons.arrow_back,
             color: MyColors.black,
@@ -67,172 +63,94 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 CustomTextForm(
-                    controller: nameController,
-                    hintText: 'Name',
-                    validator: (value)
-                    {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                    prefixIcon: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: ImageIcon(
-                        AssetImage(
-                          'assets/icons/personIcon.png',
-                        ),
-                        color: MyColors.gray,
-                        size: size.height * 0.02,
-                      ),
-                    ),
-                    obscureText: false,
-                    keyboardType: TextInputType.name,
-                ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
-                CustomTextForm(
-                  controller: emailController,
-                  hintText: 'Email',
-                  validator: (value)
-                  {
+                  controller: nameController,
+                  hintText: 'Name',
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your name';
                     }
-                    if (!Validations.isEmail(value)) {
+                    return null;
+                  },
+                  prefixIcon: Icon(Icons.person, color: MyColors.gray),
+                  obscureText: false,
+                  keyboardType: TextInputType.name,
+                ),
+                SizedBox(height: size.height * 0.02),
+                CustomTextForm(
+                  controller: emailController,
+                  hintText: 'Email',
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter your email';
+                    }
+                    if (!Validations.validateEmail(value)) {
                       return 'Please enter a valid email';
                     }
                     return null;
                   },
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ImageIcon(
-                      AssetImage(
-                        'assets/icons/mailIcon.png',
-                      ),
-                      color: MyColors.gray,
-                      size: size.height * 0.02,
-                    ),
-                  ),
+                  prefixIcon: Icon(Icons.email, color: MyColors.gray),
                   obscureText: false,
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.emailAddress,
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                SizedBox(height: size.height * 0.02),
                 CustomTextForm(
                   controller: passwordController,
                   hintText: 'Password',
-                  validator: (value)
-                  {
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
-                    // if (!Validations.isPassword(value)) {
-                    //   return 'Please enter a valid password';
-                    // }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters';
+                    }
                     return null;
                   },
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ImageIcon(
-                      AssetImage(
-                        'assets/icons/passIcon.png',
-                      ),
-                      color: MyColors.gray,
-                      size: size.height * 0.02,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: ImageIcon(
-                      AssetImage(
-                        _isPasswordVisible
-                            ? 'assets/icons/eyeSlashIIcon.png'
-                            : 'assets/icons/eyeSlashIIcon.png',
-                      ),
-                      color: MyColors.gray,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  ),
-                  obscureText: true,
-                  keyboardType: TextInputType.name,
+                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                  suffixIcon: _buildVisibilityToggle(),
+                  obscureText: !_isPasswordVisible,
+                  keyboardType: TextInputType.visiblePassword,
                 ),
-                SizedBox(
-                  height: size.height * 0.02,
-                ),
+                SizedBox(height: size.height * 0.02),
                 CustomTextForm(
                   controller: rePasswordController,
-                  hintText: 'Re Password',
-                  validator: (value)
-                  {
+                  hintText: 'Re-enter Password',
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      return 'Please re-enter your password';
                     }
                     if (value != passwordController.text) {
                       return 'Passwords do not match';
                     }
                     return null;
                   },
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: ImageIcon(
-                      AssetImage(
-                        'assets/icons/passIcon.png',
-                      ),
-                      color: MyColors.gray,
-                      size: size.height * 0.02,
-                    ),
-                  ),
-                  suffixIcon: IconButton(
-                    icon: ImageIcon(
-                      AssetImage(
-                        _isPasswordVisible
-                            ? 'assets/icons/eyeSlashIIcon.png'
-                            : 'assets/icons/eyeSlashIIcon.png',
-                      ),
-                      color: MyColors.gray,
-                    ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
-                  ),
-                  obscureText: true,
-                  keyboardType: TextInputType.name,
+                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                  suffixIcon: _buildVisibilityToggle(),
+                  obscureText: !_isPasswordVisible,
+                  keyboardType: TextInputType.visiblePassword,
                 ),
-                SizedBox(
-                  height: size.height * 0.025,
-                ),
+                SizedBox(height: size.height * 0.025),
                 CustomButton(
+                  onTab: () async {
+                    if (!formKey.currentState!.validate()) return;
 
-                    onTab: (){},
-                    title: 'Create Account',=======
-
-                    onPressed: ()
-                    {
-                      if (!formKey.currentState!.validate()) {
-                        return;
-                      }
-                      FirebaseFunction.createAccount(
+                    EasyLoading.show(status: 'Creating account...');
+                    try {
+                      bool isSuccess = await FirebaseFunction.createAccount(
                         emailController.text,
                         passwordController.text,
-                      ).then((value)
-                      {
-                        EasyLoading.dismiss();
-                        if (value == true)
-                        {
-                          Navigator.pushNamed(context, LoginScreen.routeName);
-                        }
-                      });
-                    },
-                    text: 'Create Account',
-
+                      );
+                      EasyLoading.dismiss();
+                      if (isSuccess) {
+                        Navigator.pop(context);
+                      } else {
+                        EasyLoading.showError('Registration failed. Try again.');
+                      }
+                    } catch (e) {
+                      EasyLoading.dismiss();
+                      EasyLoading.showError('Error: ${e.toString()}');
+                    }
+                  },
+                  title: 'Create Account',
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -240,20 +158,16 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Already Have Account',
+                        'Already have an account?',
                         style: TextStyle(
                           color: MyColors.black,
                           fontSize: size.height * 0.02,
                           fontWeight: FontWeight.w500,
-                          fontFamily: FontRes.INTER_18PT_SEMIBOLD,
                         ),
                       ),
                       TextButton(
-                        onPressed: ()
-                        {
-                          navigatorKey.currentState!
-                              .pushNamed(PagesRouteName.signIn);
-
+                        onPressed: () {
+                          Navigator.pop(context);
                         },
                         child: Text(
                           'Login',
@@ -262,8 +176,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontSize: size.height * 0.021,
                             fontWeight: FontWeight.w500,
                             decoration: TextDecoration.underline,
-                            decorationColor: MyColors.primary,
-                            fontFamily: FontRes.INTER_18PT_BOLDITALIC,
                           ),
                         ),
                       ),
@@ -277,24 +189,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
   Widget _buildVisibilityToggle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        icon: ImageIcon(
-          AssetImage(
-            _isPasswordVisible
-                ? 'assets/icons/eyeSlashIIcon.png'
-                : 'assets/icons/eyeSlashIIcon.png',
-          ),
-          color: MyColors.gray,
-        ),
-        onPressed: () {
-          setState(() {
-            _isPasswordVisible = !_isPasswordVisible;
-          });
-        },
+    return IconButton(
+      icon: Icon(
+        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+        color: MyColors.gray,
       ),
+      onPressed: () {
+        setState(() {
+          _isPasswordVisible = !_isPasswordVisible;
+        });
+      },
     );
   }
 }

@@ -19,7 +19,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   final List<Widget> screens = [
     HomeScreen(),
     MapScreen(),
-    SizedBox(),
+    SizedBox(), // Empty screen for the middle icon in BottomNavigationBar
     FavouritesScreen(),
     ProfileScreen(),
   ];
@@ -28,122 +28,65 @@ class _HomeLayoutState extends State<HomeLayout> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
-home-feature
-      backgroundColor: Colors.white,
-      body: screens[bottomNavIndex],
-
-      backgroundColor: Colors.red,
-      appBar: AppBar(
-        backgroundColor: MyColors.primary,
-        automaticallyImplyLeading: false,
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Welcome Back ✨',
-              style: TextStyle(
-                color: MyColors.white,
-                fontSize: size.height * 0.02,
-                fontWeight: FontWeight.w400,
-                fontFamily: FontRes.INTER_18PT_REGULAR,
-              ),
-            ),
-            Text(
-              'Sayed Abd Elsllam',
-              style: TextStyle(
-                color: MyColors.white,
-                fontSize: size.height * 0.03,
-                fontWeight: FontWeight.w700,
-                fontFamily: FontRes.INTER_18PT_BOLD,
-              ),
-            ),
-          ],
-        ),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(kToolbarHeight), // Set the preferred height
-          child: DefaultTabController(
-            length: 5,
-            child: TabBar(
-              tabs: [
-                Tab(
-                  icon: Icon(Icons.home),
-                ),
-              ],
+        backgroundColor: Colors.white, // Removed the redundant backgroundColor
+        body: screens[bottomNavIndex],
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          elevation: 0.0,
+          backgroundColor: MyColors.primary,
+          shape: const StadiumBorder(
+            side: BorderSide(
+              color: MyColors.white,
+              width: 5.0,
             ),
           ),
-        ),
-      ),
-      body: Column(
-        children: [
-
-        ],
-      ),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {  },
-        elevation: 0.0,
-        backgroundColor: MyColors.primary,
-        shape: const StadiumBorder(
-          side: BorderSide(
-
+          child: const Icon(
+            Icons.add,
             color: MyColors.white,
-            width: 5.0,
+            size: 33.0,
           ),
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
-            color: Color(0xFFffffff),
-            width: 5.0,
-          ),
-      ),
-
-        child: const Icon(
-          Icons.add,
-          color: MyColors.white,
-          size: 33.0,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-        items:
-        const [BottomNavigationBarItem(
-          icon: Icon(Icons.home_outlined),
-          activeIcon: Icon(Icons.home),
-          label: 'Home',
-        ) ,
+        bottomNavigationBar: BottomNavigationBar(
+        items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.location_on_outlined),
-          activeIcon: Icon(Icons.location_on),
-          label: 'Map',
-        ),
-          BottomNavigationBarItem(
-            icon: SizedBox.shrink(),
-            label: '',
-          ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.favorite_outline),
-          activeIcon: Icon(Icons.favorite),
-          label: 'Favourites',
-        ) ,
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person_outlined),
-          activeIcon: Icon(Icons.person),
-          label: 'Profile',
-        ) ,
-        ],
-        currentIndex: bottomNavIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: MyColors.primary,
-        selectedItemColor: MyColors.white,
-        unselectedItemColor: MyColors.white,
-        selectedFontSize: size.height * 0.015,
-        showSelectedLabels: true,
-        onTap: (index) {
-          if (index == 2) return;
-          setState(() {
-            bottomNavIndex = index;
-          });
-        },
-      ),
-    );
+        icon: Icon(Icons.home_outlined,size: 30.0,),
+    activeIcon: Icon(Icons.home,
+    size: 30.0,
+    ),
+    label: 'Home',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.location_on_outlined,size: 30.0,),
+    activeIcon: Icon(Icons.location_on,size: 30.0,),
+    label: 'Map',
+    ),
+    BottomNavigationBarItem(
+    icon: SizedBox.shrink(),
+    label: '',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.favorite_outline,size: 30.0,),
+    activeIcon: Icon(Icons.favorite,size: 30.0,),
+    label: 'Favourites',
+    ),
+    BottomNavigationBarItem(
+    icon: Icon(Icons.person_outlined,size: 30.0,),
+    activeIcon: Icon(Icons.person,size: 30.0,),
+    label: 'Profile',
+    ),
+    ],
+    currentIndex: bottomNavIndex,
+    type: BottomNavigationBarType.fixed,
+    backgroundColor: MyColors.primary,
+    selectedItemColor: MyColors.white,
+    unselectedItemColor: MyColors.white,
+    selectedFontSize: size.height * 0.016,
+    showSelectedLabels: true,
+    onTap: (index) {
+    if (index == 2) return;
+    setState(() => bottomNavIndex = index);
+    },),);
   }
 }
