@@ -1,6 +1,8 @@
-import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:evently_app/core/utils/colors.dart';
-import 'package:evently_app/res/font_res.dart';
+import 'package:evently_app/layout/fav/favourites_screen.dart';
+import 'package:evently_app/layout/home/home_screen.dart';
+import 'package:evently_app/layout/map/map_screen.dart';
+import 'package:evently_app/layout/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -13,17 +15,23 @@ class HomeLayout extends StatefulWidget {
 }
 
 class _HomeLayoutState extends State<HomeLayout> {
-  int _bottomNavIndex = 0; // Track selected index
-  final List<IconData> _iconList = [
-    Icons.home,
-    Icons.search,
-    Icons.notifications,
-    Icons.person,
+  int bottomNavIndex = 0;
+  final List<Widget> screens = [
+    HomeScreen(),
+    MapScreen(),
+    SizedBox(),
+    FavouritesScreen(),
+    ProfileScreen(),
   ];
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Scaffold(
+home-feature
+      backgroundColor: Colors.white,
+      body: screens[bottomNavIndex],
+
       backgroundColor: Colors.red,
       appBar: AppBar(
         backgroundColor: MyColors.primary,
@@ -70,16 +78,24 @@ class _HomeLayoutState extends State<HomeLayout> {
 
         ],
       ),
+
       floatingActionButton: FloatingActionButton(
         onPressed: () {  },
         elevation: 0.0,
         backgroundColor: MyColors.primary,
         shape: const StadiumBorder(
           side: BorderSide(
+
+            color: MyColors.white,
+            width: 5.0,
+          ),
+        ),
+
             color: Color(0xFFffffff),
             width: 5.0,
           ),
       ),
+
         child: const Icon(
           Icons.add,
           color: MyColors.white,
@@ -87,14 +103,46 @@ class _HomeLayoutState extends State<HomeLayout> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar(
-        icons: _iconList,
-        activeIndex: _bottomNavIndex,
-        height: size.height * 0.07,
-        gapLocation: GapLocation.center,
-        notchSmoothness: NotchSmoothness.softEdge,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
-        //other params
+      bottomNavigationBar: BottomNavigationBar(
+        items:
+        const [BottomNavigationBarItem(
+          icon: Icon(Icons.home_outlined),
+          activeIcon: Icon(Icons.home),
+          label: 'Home',
+        ) ,
+        BottomNavigationBarItem(
+          icon: Icon(Icons.location_on_outlined),
+          activeIcon: Icon(Icons.location_on),
+          label: 'Map',
+        ),
+          BottomNavigationBarItem(
+            icon: SizedBox.shrink(),
+            label: '',
+          ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite_outline),
+          activeIcon: Icon(Icons.favorite),
+          label: 'Favourites',
+        ) ,
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person_outlined),
+          activeIcon: Icon(Icons.person),
+          label: 'Profile',
+        ) ,
+        ],
+        currentIndex: bottomNavIndex,
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: MyColors.primary,
+        selectedItemColor: MyColors.white,
+        unselectedItemColor: MyColors.white,
+        selectedFontSize: size.height * 0.015,
+        showSelectedLabels: true,
+        onTap: (index) {
+          if (index == 2) return;
+          setState(() {
+            bottomNavIndex = index;
+          });
+        },
       ),
     );
   }

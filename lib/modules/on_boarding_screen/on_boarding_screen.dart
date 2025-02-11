@@ -1,14 +1,13 @@
+import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-import '../../layout/home_layout.dart';
-import '../login_screen/login_screen.dart';
 import 'widgets/on_boarding_item.dart';
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
 
-  static const String routeName = 'onBoarding';
 
   @override
   State<OnBoardingScreen> createState() => _OnBoardingScreenState();
@@ -123,7 +122,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           curve: Curves.easeInOut,
                         );
                       } else {
-                        Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+                        navigatorKey.currentState!
+                            .pushNamed(PagesRouteName.signIn);
+
                       }
                     },
                     icon:  Icon(

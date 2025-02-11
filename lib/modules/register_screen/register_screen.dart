@@ -1,9 +1,13 @@
+
+import 'package:evently_app/core/routs/pages_route_name.dart';
+=======
 import 'package:evently_app/core/extensions/validations.dart';
 import 'package:evently_app/core/utils/firebase_function.dart';
+
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
-import 'package:evently_app/modules/login_screen/login_screen.dart';
+import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +15,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
-  static const String routeName = 'register';
+
 
   @override
   State<RegisterScreen> createState() => _RegisterScreenState();
@@ -207,6 +211,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 CustomButton(
 
+                    onTab: (){},
+                    title: 'Create Account',=======
+
                     onPressed: ()
                     {
                       if (!formKey.currentState!.validate()) {
@@ -225,6 +232,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       });
                     },
                     text: 'Create Account',
+
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10.0),
@@ -243,7 +251,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       TextButton(
                         onPressed: ()
                         {
-                          Navigator.pushNamed(context, LoginScreen.routeName);
+                          navigatorKey.currentState!
+                              .pushNamed(PagesRouteName.signIn);
+
                         },
                         child: Text(
                           'Login',

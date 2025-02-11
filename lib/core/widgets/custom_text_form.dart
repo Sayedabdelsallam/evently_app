@@ -3,7 +3,7 @@ import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextForm extends StatelessWidget {
-  CustomTextForm(
+  const CustomTextForm(
       {super.key,
       required this.controller,
       required this.hintText,

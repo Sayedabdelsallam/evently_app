@@ -1,17 +1,18 @@
+
+import 'package:evently_app/core/routs/pages_route_name.dart';
+=======
 import 'package:evently_app/core/utils/firebase_function.dart';
+
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/core/utils/colors.dart';
-import 'package:evently_app/layout/home_layout.dart';
-import 'package:evently_app/modules/forget_screen/forget_pass_screen.dart';
-import 'package:evently_app/modules/register_screen/register_screen.dart';
+import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
-  static const String routeName = 'login';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -79,7 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   alignment: Alignment.centerRight,
                   child: TextButton(
                     onPressed: () {
-                      Navigator.pushNamed(context, ForgetPassScreen.routeName);
+                      navigatorKey.currentState!
+                          .pushNamed(PagesRouteName.forgetPassword);
                     },
                     child: Text(
                       'Forgot Password?',
@@ -90,8 +92,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// **Login Button**
                 CustomButton(
-                  onPressed: _login,
-                  text: 'Login',
+                  onTab: _login,
+                  title: 'Login',
                 ),
 
                 /// **Register Navigation**
@@ -145,8 +147,21 @@ class _LoginScreenState extends State<LoginScreen> {
 
   /// **Login Logic**
   void _login() {
+
+    if (_formKey.currentState!.validate()) {
+      navigatorKey.currentState!
+          .pushNamed(PagesRouteName.layout);
+
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter valid credentials'),
+        ),
+      );
+
     if (!_formKey.currentState!.validate()) {
       return;
+
     }
     FirebaseFunction.loginAccount(
       _emailController.text,
@@ -192,7 +207,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           TextButton(
             onPressed: () {
-              Navigator.pushNamed(context, RegisterScreen.routeName);
+              navigatorKey.currentState!
+                  .pushNamed(PagesRouteName.signUp);
+
             },
             child: Text(
               'Create Account',
