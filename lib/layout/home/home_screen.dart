@@ -5,7 +5,7 @@ import 'package:evently_app/layout/home/widgets/categoryCard.dart';
 import 'package:flutter/material.dart';
 import 'package:svg_flutter/svg.dart';
 
-import 'widgets/custom_tap_bar_item.dart';
+import '../../core/widgets/custom_tap_bar_item.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

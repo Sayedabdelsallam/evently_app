@@ -8,34 +8,42 @@ class CustomTapBarItem extends StatelessWidget {
     required this.size,
     required this.title,
     required this.icon,
-    required this.isSelected
+    required this.isSelected,
+     this.isHomeTab = true,
   });
 
   final Size size;
   final String title;
   final IconData icon;
   final bool isSelected;
+  final bool isHomeTab;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 14 ,vertical: 8),
       decoration: BoxDecoration(
-        color: isSelected ? MyColors.white : Colors.transparent,
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: MyColors.white)
+        color: isSelected ? (isHomeTab ?MyColors.white : MyColors.primary) : Colors.transparent,
+        borderRadius: BorderRadius.circular(37),
+        border: Border.all(
+            color: isHomeTab ?MyColors.white : MyColors.primary,
+        ),
       ),
       child: Row(
         children: [
           Icon(
             icon,
-            color: isSelected ? MyColors.primary : MyColors.white,
+            color: isSelected
+                ? (isHomeTab ?MyColors.primary : MyColors.white)
+                : (isHomeTab ?MyColors.white : MyColors.primary),
           ),
           4.spaceHorizontal,
           Text(
             title,
             style: TextStyle(
-                color: isSelected ? MyColors.primary : MyColors.white,
+                color: isSelected
+                    ? (isHomeTab ?MyColors.primary : MyColors.white)
+                    : (isHomeTab ?MyColors.white : MyColors.primary),
                 fontSize: size.height * 0.019,
                 fontWeight: FontWeight.w500
             ),
