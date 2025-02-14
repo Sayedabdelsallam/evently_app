@@ -1,3 +1,5 @@
+import 'package:evently_app/core/extensions/context_extensions.dart';
+import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/layout/fav/favourites_screen.dart';
 import 'package:evently_app/layout/home/home_screen.dart';
@@ -31,7 +33,7 @@ class _HomeLayoutState extends State<HomeLayout> {
         backgroundColor: Colors.white, // Removed the redundant backgroundColor
         body: screens[bottomNavIndex],
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () => context.goToNamed(PagesRouteName.createNewEvent),
           elevation: 0.0,
           backgroundColor: MyColors.primary,
           shape: const StadiumBorder(
