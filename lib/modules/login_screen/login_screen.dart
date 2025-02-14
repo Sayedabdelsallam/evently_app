@@ -1,8 +1,8 @@
 import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/core/utils/firebase_function.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
-import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
@@ -41,29 +41,28 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: size.height * 0.035),
 
                 /// **Email Field**
-                CustomTextForm(
+                CustomTextField(
                   controller: _emailController,
-                  hintText: 'Email',
+                  label: 'Email',
                   keyboardType: TextInputType.emailAddress,
                   prefixIcon: _buildIcon('assets/icons/mailIcon.png'),
-                  validator: (value) {
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
                     return null;
                   },
-                  obscureText: false,
                 ),
                 SizedBox(height: size.height * 0.02),
 
                 /// **Password Field**
-                CustomTextForm(
+                CustomTextField(
                   controller: _passwordController,
-                  hintText: 'Password',
-                  obscureText: !_isPasswordVisible,
+                  label: 'Password',
+                  isPassword: !_isPasswordVisible,
                   prefixIcon: _buildIcon('assets/icons/passIcon.png'),
-                  suffixIcon: _buildVisibilityToggle(),
-                  validator: (value) {
+                  suffixWidget: _buildVisibilityToggle(),
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }

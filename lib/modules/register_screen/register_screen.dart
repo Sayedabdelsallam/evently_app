@@ -2,9 +2,10 @@ import 'package:evently_app/core/extensions/validations.dart';
 import 'package:evently_app/core/utils/firebase_function.dart';
 import 'package:evently_app/core/utils/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
-import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../../core/widgets/custom_text_form.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -62,24 +63,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     height: size.height * 0.27,
                   ),
                 ),
-                CustomTextForm(
+                CustomTextField(
                   controller: nameController,
-                  hintText: 'Name',
-                  validator: (value) {
+                  label: 'Name',
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your name';
                     }
                     return null;
                   },
                   prefixIcon: Icon(Icons.person, color: MyColors.gray),
-                  obscureText: false,
                   keyboardType: TextInputType.name,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextForm(
+                CustomTextField(
                   controller: emailController,
-                  hintText: 'Email',
-                  validator: (value) {
+                  label: 'Email',
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your email';
                     }
@@ -89,14 +89,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   prefixIcon: Icon(Icons.email, color: MyColors.gray),
-                  obscureText: false,
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextForm(
+                CustomTextField(
                   controller: passwordController,
-                  hintText: 'Password',
-                  validator: (value) {
+                  label: 'Password',
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
@@ -106,15 +105,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixIcon: _buildVisibilityToggle(),
-                  obscureText: !_isPasswordVisible,
+                  suffixWidget: _buildVisibilityToggle(),
+                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextForm(
+                CustomTextField(
                   controller: rePasswordController,
-                  hintText: 'Re-enter Password',
-                  validator: (value) {
+                  label: 'Re-enter Password',
+                  onValidate: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please re-enter your password';
                     }
@@ -124,8 +123,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     return null;
                   },
                   prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixIcon: _buildVisibilityToggle(),
-                  obscureText: !_isPasswordVisible,
+                  suffixWidget: _buildVisibilityToggle(),
+                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.025),

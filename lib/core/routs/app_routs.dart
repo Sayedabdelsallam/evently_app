@@ -1,7 +1,6 @@
-
-
 import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/layout/home_layout.dart';
+import 'package:evently_app/modules/create_event/create_event_screen.dart';
 import 'package:evently_app/modules/forget_screen/forget_pass_screen.dart';
 import 'package:evently_app/modules/login_screen/login_screen.dart';
 import 'package:evently_app/modules/on_boarding_screen/on_boarding_screen.dart';
@@ -59,13 +58,13 @@ abstract class AppRoutes {
             settings: settings,
           );
         }
-      // case PagesRouteName.createNewEvent:
-      //   {
-      //     // return MaterialPageRoute(
-      //     //   builder: (context) => const CreateNewEventView(),
-      //     //   settings: settings,
-      //     // );
-      //   }
+      case PagesRouteName.createNewEvent:
+        {
+          return MaterialPageRoute(
+            builder: (context) => const CreateEventScreen(),
+            settings: settings,
+          );
+        }
       default:
         {
           return MaterialPageRoute(
