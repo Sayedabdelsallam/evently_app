@@ -63,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 CustomTextField(
+                  edgeInsets: const EdgeInsets.symmetric(vertical: 18.0),
                   controller: nameController,
                   label: 'Name',
                   onValidate: (value) {
@@ -76,6 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: size.height * 0.02),
                 CustomTextField(
+                  edgeInsets: const EdgeInsets.symmetric(vertical: 18.0),
                   controller: emailController,
                   label: 'Email',
                   onValidate: (value) {
@@ -91,10 +93,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextField(
+                TextFormField(
                   controller: passwordController,
-                  label: 'Password',
-                  onValidate: (value) {
+                  obscureText: !_isPasswordVisible, // إخفاء أو إظهار كلمة المرور
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: MyColors.gray,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: MyColors.gray, width: 1),
+                    ),
+                  ),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
@@ -103,16 +124,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return null;
                   },
-                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixWidget: _buildVisibilityToggle(),
-                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextField(
+                TextFormField(
                   controller: rePasswordController,
-                  label: 'Re-enter Password',
-                  onValidate: (value) {
+                  obscureText: !_isPasswordVisible, // إخفاء أو إظهار كلمة المرور
+                  decoration: InputDecoration(
+                    labelText: 'Re-enter Password',
+                    prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: MyColors.gray,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: MyColors.gray, width: 1),
+                    ),
+                  ),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please re-enter your password';
                     }
@@ -121,9 +158,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return null;
                   },
-                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixWidget: _buildVisibilityToggle(),
-                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.025),

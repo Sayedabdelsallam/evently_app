@@ -5,13 +5,13 @@ class CustomElevatedButton extends StatelessWidget {
   const CustomElevatedButton({
     super.key,
     required this.title,
-    required this.liftIcon,
+     this.liftIcon,
      this.rightIcon,
     required this.onTab,
   });
   final Function() onTab;
  final String title;
- final IconData liftIcon;
+ final IconData? liftIcon;
  final IconData? rightIcon ;
 
 
