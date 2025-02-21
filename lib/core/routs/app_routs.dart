@@ -10,7 +10,6 @@ import 'package:evently_app/modules/on_boarding_screen/on_boarding_screen.dart';
 import 'package:evently_app/modules/register_screen/register_screen.dart';
 import 'package:evently_app/modules/splash_screen/splash_screen.dart';
 import 'package:flutter/material.dart';
-
 import '../../layout/home/event_details.dart';
 
 abstract class AppRoutes {
@@ -19,7 +18,7 @@ abstract class AppRoutes {
       case PagesRouteName.initial:
         {
           return MaterialPageRoute(
-            builder: (context) => const HomeLayout(),
+            builder: (context) => const SplashScreen(),
             settings: settings,
           );
         }
