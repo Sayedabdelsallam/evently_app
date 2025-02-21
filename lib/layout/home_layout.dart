@@ -1,11 +1,13 @@
 import 'package:evently_app/core/extensions/context_extensions.dart';
 import 'package:evently_app/core/routs/pages_route_name.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/layout/fav/favourites_screen.dart';
 import 'package:evently_app/layout/home/home_screen.dart';
 import 'package:evently_app/layout/map/map_screen.dart';
 import 'package:evently_app/layout/profile/profile_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'home';
@@ -28,9 +30,10 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
+    var locale = AppLocalizations.of(context);
+    var theme = Theme.of(context);
     var size = MediaQuery.of(context).size;
-    return Scaffold(
-        backgroundColor: Colors.white, // Removed the redundant backgroundColor
+    return Scaffold(// Removed the redundant backgroundColor
         body: screens[bottomNavIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () => context.goToNamed(PagesRouteName.createNewEvent),
@@ -51,18 +54,18 @@ class _HomeLayoutState extends State<HomeLayout> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
 
         bottomNavigationBar: BottomNavigationBar(
-        items: const [
+        items:  [
         BottomNavigationBarItem(
         icon: Icon(Icons.home_outlined,size: 30.0,),
     activeIcon: Icon(Icons.home,
     size: 30.0,
     ),
-    label: 'Home',
+    label: locale?.home,
     ),
     BottomNavigationBarItem(
     icon: Icon(Icons.location_on_outlined,size: 30.0,),
     activeIcon: Icon(Icons.location_on,size: 30.0,),
-    label: 'Map',
+    label: locale?.map,
     ),
     BottomNavigationBarItem(
     icon: SizedBox.shrink(),
@@ -71,21 +74,17 @@ class _HomeLayoutState extends State<HomeLayout> {
     BottomNavigationBarItem(
     icon: Icon(Icons.favorite_outline,size: 30.0,),
     activeIcon: Icon(Icons.favorite,size: 30.0,),
-    label: 'Favourites',
+    label: locale?.favourites,
     ),
     BottomNavigationBarItem(
     icon: Icon(Icons.person_outlined,size: 30.0,),
     activeIcon: Icon(Icons.person,size: 30.0,),
-    label: 'Profile',
+    label: locale?.profile,
     ),
     ],
     currentIndex: bottomNavIndex,
-    type: BottomNavigationBarType.fixed,
-    backgroundColor: MyColors.primary,
-    selectedItemColor: MyColors.white,
-    unselectedItemColor: MyColors.white,
     selectedFontSize: size.height * 0.016,
-    showSelectedLabels: true,
+
     onTap: (index) {
     if (index == 2) return;
     setState(() => bottomNavIndex = index);

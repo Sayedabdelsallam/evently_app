@@ -12,14 +12,14 @@ import "package:intl/intl.dart";
 import '../../core/services/firebase_firestore_services.dart';
 import '../../models/event_category.dart';
 
-class CreateEventScreen extends StatefulWidget {
-  const CreateEventScreen({super.key});
+class EditEvent extends StatefulWidget {
+  const EditEvent({super.key});
 
   @override
-  State<CreateEventScreen> createState() => _CreateEventScreenState();
+  State<EditEvent> createState() => _EditEventScreenState();
 }
 
-class _CreateEventScreenState extends State<CreateEventScreen> {
+class _EditEventScreenState extends State<EditEvent> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
@@ -56,7 +56,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var size = MediaQuery.of(context).size;
-
+    final args = ModalRoute.of(context)!.settings.arguments as EventDataModel;
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -68,7 +68,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
           ),
         ),
         title: Text(
-          'Create Event',
+          'Edit Event',
           style: TextStyle(
             color: MyColors.primary,
             fontSize: size.height * 0.025,
@@ -90,6 +90,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16.0),
                   child: Image.asset(
+                    args.eventImage ??
                     eventCategories[selectedTab].eventCategoryImg,
                     fit: BoxFit.cover,
                   ),
@@ -104,7 +105,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     indicatorPadding: EdgeInsets.zero,
                     labelPadding: const EdgeInsets.symmetric(horizontal: 6.0),
                     padding:
-                        const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
+                    const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
                     indicator: const BoxDecoration(),
                     onTap: (value) {
                       setState(() {
@@ -112,11 +113,11 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                       });
                     },
                     tabs: eventCategories.map(
-                      (element) {
+                          (element) {
                         return TabWidget(
                           eventCategory: element,
                           isSelected:
-                              selectedTab == eventCategories.indexOf(element),
+                          selectedTab == eventCategories.indexOf(element),
                         );
                       },
                     ).toList()),
@@ -129,7 +130,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               const SizedBox(height: 8),
               CustomTextField(
                 controller: titleController,
-                hint: "Event Title",
+                hint: args.eventTitle,
                 hintColor: MyColors.gray,
                 prefixIcon: const Icon(
                   Icons.edit_note_outlined,
@@ -144,7 +145,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
               const SizedBox(height: 8),
               CustomTextField(
                 controller: descriptionController,
-                hint: "Event Description",
+                hint: args.eventDescription,
                 hintColor: MyColors.gray,
                 maxLines: 4,
               ),
@@ -165,7 +166,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     child: Text(
                       selectedDate != null
                           ? DateFormat("dd MMM yyy").format(selectedDate!)
-                          : "Choose Date",
+                          : DateFormat("dd MMM yyy").format(args.eventDate),
                       style: theme.textTheme.titleMedium?.copyWith(
                           color: MyColors.primary, fontWeight: FontWeight.bold),
                     ),
@@ -182,7 +183,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                 onPressed: () {},
                 style: ElevatedButton.styleFrom(
                     padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                    const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
                     elevation: 0,
                     backgroundColor: Colors.transparent,
                     shape: RoundedRectangleBorder(
@@ -223,29 +224,35 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     if (formKey.currentState!.validate()) {
                       if (selectedDate != null) {
                         var data = EventDataModel(
-                          eventTitle: titleController.text,
-                          eventDescription: descriptionController.text,
-                          eventCategory:
-                          eventCategories[selectedTab].eventCategoryName,
+                          eventID: args.eventID, // يجب تمرير eventID الموجود مسبقًا
+                          eventTitle: titleController.text.isNotEmpty
+                              ? titleController.text
+                              : args.eventTitle,
+                          eventDescription: descriptionController.text.isNotEmpty
+                              ? descriptionController.text
+                              : args.eventDescription,
+                          eventCategory: eventCategories[selectedTab].eventCategoryName,
                           eventImage: eventCategories[selectedTab].eventCategoryImg,
-                          eventDate: selectedDate ?? DateTime.now(),
+                          eventDate: selectedDate ?? args.eventDate,
                         );
-                        EasyLoading.show();
-                        FirebaseFirestoreService.createNewEvent(data)
-                            .then((value) {
+
+                        EasyLoading.show(status: "Updating...");
+
+                        FirebaseFirestoreService.updateEvent(data).then((value) {
                           EasyLoading.dismiss();
-                          if (value == true) {
+                          if (value) {
                             navigatorKey.currentState!.pop();
-                            SnackBarServices.showSuccessMessage(
-                                "Event Created Successfully");
+                            SnackBarServices.showSuccessMessage("Event Updated Successfully");
+                          } else {
+                            SnackBarServices.showErrorMessage("Failed to update event. Try again!");
                           }
                         });
-                      }else {
-                        SnackBarServices.showErrorMessage(
-                            "Please select event date");
+                      } else {
+                        SnackBarServices.showErrorMessage("Please select an event date");
                       }
                     }
                   },
+
                   style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
                           horizontal: 8, vertical: 12),
@@ -259,7 +266,7 @@ class _CreateEventScreenState extends State<CreateEventScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Add Event",
+                        "Update Event",
                         style: theme.textTheme.titleMedium?.copyWith(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,

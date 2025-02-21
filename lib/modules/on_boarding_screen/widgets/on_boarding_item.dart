@@ -1,7 +1,7 @@
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 
-import '../../../core/utils/colors.dart';
+import '../../../core/theme/colors.dart';
 
 class OnBoardingItem extends StatelessWidget {
   const OnBoardingItem(

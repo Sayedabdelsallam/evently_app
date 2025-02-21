@@ -1,12 +1,13 @@
 import 'package:evently_app/core/routs/pages_route_name.dart';
-import 'package:evently_app/core/utils/firebase_function.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../../core/services/firebase_auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -59,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CustomTextField(
                   controller: _passwordController,
                   label: 'Password',
-                  isPassword: !_isPasswordVisible,
+                  isPassword: !_isPasswordVisible, // يجعل الحقل مخفيًا
                   prefixIcon: _buildIcon('assets/icons/passIcon.png'),
                   suffixWidget: _buildVisibilityToggle(),
                   onValidate: (value) {
@@ -70,6 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   keyboardType: TextInputType.visiblePassword,
                 ),
+
                 SizedBox(height: size.height * 0.015),
 
                 /// **Forgot Password**
@@ -146,7 +148,7 @@ class _LoginScreenState extends State<LoginScreen> {
   void _login() {
     if (_formKey.currentState!.validate()) {
       // Perform Firebase login
-      FirebaseFunction.loginAccount(
+      FirebaseAuthService.loginAccount(
         _emailController.text,
         _passwordController.text,
       ).then((value) {
@@ -252,7 +254,12 @@ class _LoginScreenState extends State<LoginScreen> {
         minimumSize: Size(size.width * 0.8, size.height * 0.06),
         side: BorderSide(color: MyColors.primary),
       ),
-      onPressed: () {},
+      onPressed: () {
+
+        FirebaseAuthService.signInWithGoogle();
+        EasyLoading.dismiss();
+
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

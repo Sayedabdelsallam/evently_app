@@ -1,10 +1,9 @@
 import 'package:evently_app/core/extensions/validations.dart';
-import 'package:evently_app/core/utils/firebase_function.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import '../../core/services/firebase_auth_services.dart';
 import '../../core/widgets/custom_text_form.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -134,7 +133,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     EasyLoading.show(status: 'Creating account...');
                     try {
-                      bool isSuccess = await FirebaseFunction.createAccount(
+                      bool isSuccess = await FirebaseAuthService.createAccount(
                         emailController.text,
                         passwordController.text,
                       );
