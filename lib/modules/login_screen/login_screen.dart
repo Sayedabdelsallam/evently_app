@@ -161,27 +161,6 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// **Password Visibility Toggle**
-  Widget _buildVisibilityToggle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        icon: ImageIcon(
-          AssetImage(
-            _isPasswordVisible
-                ? 'assets/icons/eyeIcon.png' // Corrected for visible password icon
-                : 'assets/icons/eyeSlashIIcon.png', // Corrected for hidden password icon
-          ),
-          color: MyColors.gray,
-        ),
-        onPressed: () {
-          setState(() {
-            _isPasswordVisible = !_isPasswordVisible;
-          });
-        },
-      ),
-    );
-  }
 
   /// **Login Logic**
   void _login() {
