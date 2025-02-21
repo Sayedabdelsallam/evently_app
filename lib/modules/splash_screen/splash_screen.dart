@@ -1,4 +1,3 @@
-
 import 'package:evently_app/core/routs/pages_route_name.dart';
 import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
@@ -17,7 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Future.delayed(Duration(seconds: 3), () {
       navigatorKey.currentState!
-          .pushNamed(PagesRouteName.layout);
+          .pushNamed(PagesRouteName.onBoarding);
 
     });
   }

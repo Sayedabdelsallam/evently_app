@@ -1,4 +1,4 @@
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 
 void configLoading () {

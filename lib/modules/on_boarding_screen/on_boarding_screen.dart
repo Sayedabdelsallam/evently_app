@@ -1,5 +1,5 @@
 import 'package:evently_app/core/routs/pages_route_name.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';

@@ -3,7 +3,7 @@ import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:evently_app/main.dart';
 import 'package:flutter/material.dart';
 
-import '../../core/utils/colors.dart';
+import '../../core/theme/colors.dart';
 
 class ForgetPassScreen extends StatelessWidget {
   const ForgetPassScreen({super.key});

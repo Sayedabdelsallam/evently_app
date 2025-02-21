@@ -1,12 +1,12 @@
 import 'package:evently_app/core/routs/pages_route_name.dart';
-import 'package:evently_app/core/utils/firebase_function.dart';
-import 'package:evently_app/core/widgets/custom_button.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/core/widgets/custom_text_form.dart';
 import 'package:evently_app/main.dart';
 import 'package:evently_app/res/font_res.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+
+import '../../core/services/firebase_auth_services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
+    var theme = Theme.of(context);
 
     return Scaffold(
       body: SafeArea(
@@ -42,6 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 /// **Email Field**
                 CustomTextField(
+                  edgeInsets: const EdgeInsets.symmetric(vertical: 16.0),
                   controller: _emailController,
                   label: 'Email',
                   keyboardType: TextInputType.emailAddress,
@@ -56,13 +58,35 @@ class _LoginScreenState extends State<LoginScreen> {
                 SizedBox(height: size.height * 0.02),
 
                 /// **Password Field**
-                CustomTextField(
+                TextFormField(
                   controller: _passwordController,
-                  label: 'Password',
-                  isPassword: !_isPasswordVisible,
-                  prefixIcon: _buildIcon('assets/icons/passIcon.png'),
-                  suffixWidget: _buildVisibilityToggle(),
-                  onValidate: (value) {
+                  obscureText: !_isPasswordVisible, // إخفاء أو إظهار كلمة المرور
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: ImageIcon(
+                        AssetImage('assets/icons/passIcon.png'),
+                        color: MyColors.gray,
+                      ),
+                    ),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: MyColors.gray,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: MyColors.gray, width: 1),
+                    ),
+                  ),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
@@ -70,6 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   keyboardType: TextInputType.visiblePassword,
                 ),
+
+
                 SizedBox(height: size.height * 0.015),
 
                 /// **Forgot Password**
@@ -88,9 +114,24 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
 
                 /// **Login Button**
-                CustomButton(
-                  onTab: _login,
-                  title: 'Login',
+                ElevatedButton(
+                  onPressed: _login,
+                  style: ElevatedButton.styleFrom(
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
+                      elevation: 0,
+                      backgroundColor: MyColors.primary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.0),
+                      ),
+                      side: const BorderSide(color: MyColors.primary)),
+                  child: Text(
+                    "Login",
+                    style: theme.textTheme.titleMedium?.copyWith(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w700,
+                        color: MyColors.white),
+                  ),
                 ),
 
                 /// **Register Navigation**
@@ -120,33 +161,12 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  /// **Password Visibility Toggle**
-  Widget _buildVisibilityToggle() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: IconButton(
-        icon: ImageIcon(
-          AssetImage(
-            _isPasswordVisible
-                ? 'assets/icons/eyeIcon.png' // Corrected for visible password icon
-                : 'assets/icons/eyeSlashIIcon.png', // Corrected for hidden password icon
-          ),
-          color: MyColors.gray,
-        ),
-        onPressed: () {
-          setState(() {
-            _isPasswordVisible = !_isPasswordVisible;
-          });
-        },
-      ),
-    );
-  }
 
   /// **Login Logic**
   void _login() {
     if (_formKey.currentState!.validate()) {
       // Perform Firebase login
-      FirebaseFunction.loginAccount(
+      FirebaseAuthService.loginAccount(
         _emailController.text,
         _passwordController.text,
       ).then((value) {
@@ -252,7 +272,12 @@ class _LoginScreenState extends State<LoginScreen> {
         minimumSize: Size(size.width * 0.8, size.height * 0.06),
         side: BorderSide(color: MyColors.primary),
       ),
-      onPressed: () {},
+      onPressed: () {
+
+        FirebaseAuthService.signInWithGoogle();
+        EasyLoading.dismiss();
+
+      },
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

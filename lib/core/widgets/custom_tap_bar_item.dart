@@ -1,5 +1,5 @@
 import 'package:evently_app/core/extensions/dimensions.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class CustomTapBarItem extends StatelessWidget {

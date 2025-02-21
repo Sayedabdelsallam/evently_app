@@ -1,10 +1,9 @@
 import 'package:evently_app/core/extensions/validations.dart';
-import 'package:evently_app/core/utils/firebase_function.dart';
-import 'package:evently_app/core/utils/colors.dart';
+import 'package:evently_app/core/theme/colors.dart';
 import 'package:evently_app/core/widgets/custom_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-
+import '../../core/services/firebase_auth_services.dart';
 import '../../core/widgets/custom_text_form.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -64,6 +63,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
                 CustomTextField(
+                  edgeInsets: const EdgeInsets.symmetric(vertical: 18.0),
                   controller: nameController,
                   label: 'Name',
                   onValidate: (value) {
@@ -77,6 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 ),
                 SizedBox(height: size.height * 0.02),
                 CustomTextField(
+                  edgeInsets: const EdgeInsets.symmetric(vertical: 18.0),
                   controller: emailController,
                   label: 'Email',
                   onValidate: (value) {
@@ -92,10 +93,29 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   keyboardType: TextInputType.emailAddress,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextField(
+                TextFormField(
                   controller: passwordController,
-                  label: 'Password',
-                  onValidate: (value) {
+                  obscureText: !_isPasswordVisible, // إخفاء أو إظهار كلمة المرور
+                  decoration: InputDecoration(
+                    labelText: 'Password',
+                    prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: MyColors.gray,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: MyColors.gray, width: 1),
+                    ),
+                  ),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
@@ -104,16 +124,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return null;
                   },
-                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixWidget: _buildVisibilityToggle(),
-                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.02),
-                CustomTextField(
+                TextFormField(
                   controller: rePasswordController,
-                  label: 'Re-enter Password',
-                  onValidate: (value) {
+                  obscureText: !_isPasswordVisible, // إخفاء أو إظهار كلمة المرور
+                  decoration: InputDecoration(
+                    labelText: 'Re-enter Password',
+                    prefixIcon: Icon(Icons.lock, color: MyColors.gray),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                        color: MyColors.gray,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: MyColors.gray, width: 1),
+                    ),
+                  ),
+                  validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please re-enter your password';
                     }
@@ -122,9 +158,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     }
                     return null;
                   },
-                  prefixIcon: Icon(Icons.lock, color: MyColors.gray),
-                  suffixWidget: _buildVisibilityToggle(),
-                  isPassword: !_isPasswordVisible,
                   keyboardType: TextInputType.visiblePassword,
                 ),
                 SizedBox(height: size.height * 0.025),
@@ -134,7 +167,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
                     EasyLoading.show(status: 'Creating account...');
                     try {
-                      bool isSuccess = await FirebaseFunction.createAccount(
+                      bool isSuccess = await FirebaseAuthService.createAccount(
                         emailController.text,
                         passwordController.text,
                       );

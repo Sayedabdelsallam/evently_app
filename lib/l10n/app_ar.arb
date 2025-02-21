@@ -1,0 +1,14 @@
+{
+  "home": "الرئيسية" ,
+  "events": "الأحداث",
+  "favourites": "المفضلة",
+  "profile": "الملف الشخصي",
+  "search": "البحث",
+  "event": "حدث",
+  "eventDetails": "تفاصيل الحدث",
+  "eventDescription": "وصف الحدث",
+  "eventLocation": "موقع الحدث",
+  "eventDate": "تاريخ الحدث",
+  "eventTime": "وقت الحدث",
+  "map": "خريطة"
+}

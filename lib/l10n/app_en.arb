@@ -1,0 +1,15 @@
+{
+  "home": "Home",
+  "events": "Events",
+  "favourites": "Favourites",
+  "profile": "Profile",
+  "search": "Search",
+  "event": "Event",
+  "eventDetails": "Event Details",
+  "eventDescription": "Event Description",
+  "eventLocation": "Event Location",
+  "eventDate": "Event Date",
+  "eventTime": "Event Time",
+  "map": "Map"
+
+}

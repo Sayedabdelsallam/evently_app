@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../utils/colors.dart';
+import '../theme/colors.dart';
 
 class CustomButton extends StatelessWidget {
   final String title;
@@ -22,7 +22,9 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+
       style: ElevatedButton.styleFrom(
+
         backgroundColor: bgColor,
         padding: const EdgeInsets.all(8),
         shape: RoundedRectangleBorder(
